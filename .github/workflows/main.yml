@@ -3,10 +3,10 @@ name: 'Update schedule'
 on:
   workflow_dispatch:
     branches:
-      - master
+      - main
   push:
     branches:
-      - master
+      - main
 jobs:
   push:
     runs-on: ${{ matrix.operating-system }}
