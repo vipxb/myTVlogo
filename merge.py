@@ -54,7 +54,7 @@ async def main():
     channels = []
     for channel_url in channels_url:
         async with aiohttp.ClientSession() as session:
-            async with session.get(channels_url) as response:
+            async with session.get(channel_url) as response:
                 if response.status == 200:
                     content = await response.text()
                     channels += [line for line in content.split(
