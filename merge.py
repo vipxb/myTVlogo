@@ -29,7 +29,7 @@ def get_urls():
 
 
 async def process_channel(channel, urls, semaphore):
-    if (os.path.exists(f'img/{channel}.png')):
+    if (os.path.exists(f'./img/{channel}.png')):
         return
     flag = False
     async with semaphore:  # 使用信号量限制并发
@@ -41,7 +41,7 @@ async def process_channel(channel, urls, semaphore):
                 async with session.get(now_url) as response:
                     if response.status == 200:
                         content = await response.read()
-                        with open(f'img/{channel}.png', 'wb') as f:
+                        with open(f'./img/{channel}.png', 'wb') as f:
                             f.write(content)
                         flag = True
 
@@ -69,4 +69,5 @@ async def main():
 
 
 if __name__ == '__main__':
+    os.makedirs('img', exist_ok=True)
     asyncio.run(main())
