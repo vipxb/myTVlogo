@@ -45,16 +45,20 @@ async def process_channel(channel, urls, semaphore):
                             f.write(content)
                         flag = True
 
-channels_url = "https://github.com/mytv-android/iptv-api/raw/refs/heads/master/config/demo.txt"
+channels_url = [
+    "https://github.com/mytv-android/iptv-api/raw/refs/heads/master/config/demo.txt", 
+    "https://github.com/mytv-android/myTVlogo/raw/refs/heads/main/channel.txt"
+]
 async def main():
     urls = get_urls()
     channels = []
-    async with aiohttp.ClientSession() as session:
-        async with session.get(channels_url) as response:
-            if response.status == 200:
-                content = await response.text()
-                channels += [line for line in content.split(
-                    '\n') if line and not line.startswith('#')]
+    for channel_url in channels_url:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(channels_url) as response:
+                if response.status == 200:
+                    content = await response.text()
+                    channels += [line for line in content.split(
+                        '\n') if line and not line.startswith('#')]
     channels = list(set(channels))  # 去重
     semaphore = asyncio.Semaphore(10)  # 限制并发任务数量为 10
 
