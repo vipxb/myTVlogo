@@ -29,7 +29,7 @@ def get_urls():
 
 
 async def process_channel(channel, urls, semaphore):
-    if (os.exists(f'img/{channel}.png')):
+    if (os.path.exists(f'img/{channel}.png')):
         return
     flag = False
     async with semaphore:  # 使用信号量限制并发
