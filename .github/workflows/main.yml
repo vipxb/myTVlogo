@@ -1,0 +1,51 @@
+name: 'Update schedule'
+
+on:
+  workflow_dispatch:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+jobs:
+  push:
+    runs-on: ${{ matrix.operating-system }}
+    timeout-minutes: 240
+    strategy:
+      matrix:
+        operating-system: [ 'ubuntu-latest' ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run with setup-python 3.13
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+          update-environment: true
+          cache: 'pipenv'
+      - name: Install pipenv
+        run: pip3 install --user pipenv
+      - name: Install dependecies
+        run: |
+          pipenv lock
+          pipenv --python 3.13 && pipenv install --deploy
+      - name: Update EPG
+        run: pipenv run epg
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote set-url remote1 git@gitee.com:mytv-android/myEPG.git
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "Github Action Auto Updated"
+            git push --force
+            git push remote1 --force
+          fi
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}  
+          dst_token:  ${{ secrets.GITEE_TOKEN }}  
+          force_update: true
+          mappings: ".github=>github"
+          static_list: "myTVlogo"
+          account_type: org   		
+          debug: true
+
