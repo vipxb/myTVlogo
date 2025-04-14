@@ -41,7 +41,7 @@ async def process_channel(channel, urls, semaphore):
                 async with session.get(now_url) as response:
                     if response.status == 200:
                         content = await response.read()
-                        with open(f'images/{channel}.png', 'wb') as f:
+                        with open(f'img/{channel}.png', 'wb') as f:
                             f.write(content)
                         flag = True
 
