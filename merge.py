@@ -85,6 +85,40 @@ async def main():
     print("All channels Processed.")                        
 
 
+def generate_img_file_list():
+    """
+    根据./img中的所有文件生成一份文件列表，去掉文件的扩展名
+    """
+    img_dir = './img'
+    file_list = []
+
+    if os.path.exists(img_dir):
+        for filename in os.listdir(img_dir):
+            if os.path.isfile(os.path.join(img_dir, filename)):
+                # 去掉文件扩展名
+                name_without_ext = os.path.splitext(filename)[0]
+                # 去掉前缀下划线（如果存在）
+                # if name_without_ext.startswith('_'):
+                #     name_without_ext = name_without_ext[1:]
+                file_list.append(name_without_ext)
+
+    # 排序文件列表
+    file_list.sort()
+
+    # 将结果写入文件
+    txt_path = 'logo_list.txt'
+    with open(txt_path, 'w', encoding='utf-8') as f:
+        for filename in file_list:
+            f.write(filename + '\n')
+
+    gz_path = 'logo_list.gz'
+    with open(txt_path, 'rb') as f_in, gzip.open(gz_path, 'wb') as f_out:
+        shutil.copyfileobj(f_in, f_out)
+
+    print(f"已生成压缩文件：{gz_path}")
+    print(f"生成了包含 {len(file_list)} 个文件的列表： {txt_path}")
+
 if __name__ == '__main__':
     os.makedirs('img', exist_ok=True)
     asyncio.run(main())
+    generate_img_file_list()
