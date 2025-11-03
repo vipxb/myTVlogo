@@ -1073,11 +1073,11 @@
         },
         "pyinstaller-hooks-contrib": {
             "hashes": [
-                "sha256:3402ad41dfe9b5110af134422e37fc5d421ba342c6cb980bd67cb30b7415641c",
-                "sha256:8d0b8cfa0cb689a619294ae200497374234bd4e3994b3ace2a4442274c899064"
+                "sha256:56e972bdaad4e9af767ed47d132362d162112260cbe488c9da7fee01f228a5a6",
+                "sha256:ccbfaa49399ef6b18486a165810155e5a8d4c59b41f20dc5da81af7482aaf038"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==2025.8"
+            "version": "==2025.9"
         },
         "pysocks": {
             "hashes": [
