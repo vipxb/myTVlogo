@@ -58,7 +58,7 @@ async def process_channel(channel, urls, semaphore):
                     await asyncio.sleep(sleep_time)  # 等待一段时间后重试
 
 channels_url = [
-    "https://github.com/mytv-android/iptv-api/raw/refs/heads/master/config/demo.txt", 
+    # "https://github.com/mytv-android/iptv-api/raw/refs/heads/master/config/demo.txt", 
     "https://github.com/mytv-android/myTVlogo/raw/refs/heads/main/channel.txt",
     "https://github.com/ldm0206/iptv-api/raw/refs/heads/master/config/demo.txt"
 ]
